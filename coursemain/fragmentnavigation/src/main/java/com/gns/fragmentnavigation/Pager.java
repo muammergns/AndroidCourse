@@ -26,6 +26,8 @@ public class Pager extends FragmentStateAdapter {
                 return new FirstFragment();
             case 1:
                 return new SecondFragment();
+            case 2:
+                return new ThirdFragment();
         }
         return new FirstFragment();
     }
