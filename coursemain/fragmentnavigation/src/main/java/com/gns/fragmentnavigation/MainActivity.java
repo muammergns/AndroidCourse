@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         createClassicFragment();
         //createPagerFragment();
 
+        
 
         binding.floatingActionButton.setOnClickListener(view ->{
             Snackbar.make(view,"My Own Action",Snackbar.LENGTH_LONG).setAction("Action",null).show();
@@ -60,7 +61,13 @@ public class MainActivity extends AppCompatActivity {
         }).attach();
     }
 
+    /**createClassicFragment
+     * burada nedense fragmentlar arası geçişte bir problem var
+     * birkaç geçişten sonra 2.fragmenti göstermiyor
+     * ancak pager harika çalışıyor
+     */
     private void createClassicFragment(){
+
 
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText(pages[0]));
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText(pages[1]));
