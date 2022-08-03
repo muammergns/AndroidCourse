@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_graph"
+    app:startDestination="@id/firstChild">
+
+    <!--
+    yeni bir xml resources file oluşturulur
+    oluştururken bu dosyanın kaynağına navigation olduğu belirtilir
+
+    eklenecek fragmentlar bu xml dosyasına tanımlanır ve görsel olarak takip edilebilir
+    sonra aksiyonlar tanımlanır yani çıkan oklar
+    bu okların idleri ile işlemler yapılır
+    hem normal çalışma hemde binding çalışma nasıl oluyor bakılacak
+
+    java(generated) klasörünün içine sınıflar oluşturdu
+    directions sınıfları oluşturuldu
+
+    aksiyonlara animasyon dahi verilebiliyor ve sorunsuz çalışıyor
+    -->
+
+    <fragment
+        android:id="@+id/firstChild"
+        android:name="com.gns.fragmentnavigation.FirstChild"
+        android:label="fragment_first_child"
+        tools:layout="@layout/fragment_first_child" >
+        <action
+            android:id="@+id/action_firstChild_to_secondChild"
+            app:destination="@id/secondChild"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/secondChild"
+        android:name="com.gns.fragmentnavigation.SecondChild"
+        android:label="fragment_second_child"
+        tools:layout="@layout/fragment_second_child" >
+        <action
+            android:id="@+id/action_secondChild_to_firstChild"
+            app:destination="@id/firstChild"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+        <!--
+        bir fragmenttan diğerine veri aktarmak için argümanları kullanırız
+        argümanın ismi veri tipi ve default value verilir
+        tüm data tipleri ve arraylar bile mevcut
+        safe arguments eklememizin sebebi buydu
+        burası yeni sınıflar oluşturuyor otomatik olarak
+         -->
+        <argument
+            android:name="age"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
+</navigation>

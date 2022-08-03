@@ -1,9 +1,6 @@
 package com.gns.fragmentnavigation;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.view.View;
@@ -21,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
      * yani xml içerisinde yapılan her değişiklik bu sınıfıda değiştiriyor
      */
     ActivityMainBinding binding;
-    String[] pages = new String[]{"First","Second"};
+    String[] pages = new String[]{"First","Second","Third"};
 
     /** Fragment kullanım amacı
      * Bir uygulamaya kaydırmalı gezinme eklemek için, her ekran için bir Fragment uygulayın,
@@ -39,10 +36,10 @@ public class MainActivity extends AppCompatActivity {
         //bu görünümü aktiviteye bağla
         setContentView(mainView);
 
-        createClassicFragment();
-        //createPagerFragment();
 
-        
+        createNavigationFragment();
+        //createClassicFragment();
+        //createPagerFragment();
 
         binding.floatingActionButton.setOnClickListener(view ->{
             Snackbar.make(view,"My Own Action",Snackbar.LENGTH_LONG).setAction("Action",null).show();
@@ -50,45 +47,46 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void createNavigationFragment(){
+        binding.frameLayout.setVisibility(View.GONE);
+        binding.viewPager2.setVisibility(View.GONE);
+    }
+
     private void createPagerFragment(){
+        binding.frameLayout.setVisibility(View.GONE);
+        binding.fragmentContainerView.setVisibility(View.GONE);
         Pager pager = new Pager(this,pages);
         binding.viewPager2.setAdapter(pager);
-        new TabLayoutMediator(binding.tabLayout, binding.viewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
-            @Override
-            public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
-                tab.setText(pages[position]);
-            }
+        new TabLayoutMediator(binding.tabLayout, binding.viewPager2, (tab, position) -> {
+            tab.setText(pages[position]);
         }).attach();
     }
 
-    /**createClassicFragment
-     * burada nedense fragmentlar arası geçişte bir problem var
-     * birkaç geçişten sonra 2.fragmenti göstermiyor
-     * ancak pager harika çalışıyor
+    /**
+     * klasik fragment oluştuma yöntemi çok sorunlu bunu tekrar kullanmayacağım
+     * sorunun ne olduğunu bulamadım ancak pager ve navigation çok iyi çalışıyor
      */
     private void createClassicFragment(){
-
-
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText(pages[0]));
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText(pages[1]));
-
-        FirstFragment firstFragment = new FirstFragment();
-        SecondFragment secondFragment = new SecondFragment();
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.frameLayout,firstFragment)
-                .commit();
-
+        binding.viewPager2.setVisibility(View.GONE);
+        binding.fragmentContainerView.setVisibility(View.GONE);
+        for (String s : pages){
+            binding.tabLayout.addTab(binding.tabLayout.newTab().setText(s));
+        }
         binding.tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 switch (binding.tabLayout.getSelectedTabPosition()){
                     case 0:
                         getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.frameLayout,firstFragment)
+                                .replace(R.id.frameLayout,new FirstFragment())
                                 .commit();
                     case 1:
                         getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.frameLayout,secondFragment)
+                                .replace(R.id.frameLayout,new SecondFragment())
+                                .commit();
+                    case 2:
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.frameLayout,new ThirdFragment())
                                 .commit();
                 }
             }
