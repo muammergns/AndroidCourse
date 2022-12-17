@@ -18,3 +18,4 @@ rootProject.name = "AndroidCourse"
 include ':coursemain'
 include ':coursemain:roomdatabase'
 include ':coursemain:fragmentnavigation'
+include ':coursemain:workmanager'
