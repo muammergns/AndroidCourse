@@ -31,8 +31,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        add = findViewById(R.id.button);
-        viewall = findViewById(R.id.button2);
+        add = findViewById(R.id.add_button);
+        viewall = findViewById(R.id.viewbutton);
         listView = findViewById(R.id.listView);
         checkBox = findViewById(R.id.checkBox);
         name = findViewById(R.id.editTextTextPersonName);
