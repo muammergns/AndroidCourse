@@ -6,13 +6,15 @@ import android.content.Intent;
 import android.os.Build;
 import android.util.Log;
 
+import java.util.Objects;
+
 public class NotificationReceiver extends BroadcastReceiver {
     private static final String TAG = "NotificationReceiver";
     @Override
     public void onReceive(Context context, Intent intent) {
-        if (intent.getStringExtra("putExtra").equals("actionIntent")){
+        if (Objects.equals(intent.getStringExtra("putExtra"), "actionIntent")){
             Log.d(TAG, "onReceive: actionIntent");
-        }else if(intent.getStringExtra("putExtra").equals("startProgressIntent")){
+        }else if(Objects.equals(intent.getStringExtra("putExtra"), "startProgressIntent")){
             Log.d(TAG, "onReceive: startProgressIntent");
             startProgressNotification(context);
         }else {

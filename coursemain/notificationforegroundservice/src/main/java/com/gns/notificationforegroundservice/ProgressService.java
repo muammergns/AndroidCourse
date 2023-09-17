@@ -24,6 +24,17 @@ public class ProgressService extends Service {
         showNotification(SystemClock.elapsedRealtime()/1000, 120);
     }
 
+    /** Foreground Services
+     * artık bu servisin kullanımı kısıtlanıyor
+     * bunun yerine uygulamaya girip kullanıcının kalan süresini görmesi gerekiyor
+     * belki süre dolunca düz bir bildirim göstermek mantıklı olabilir
+     * bunun içinde alarm manager üzerinde çalışılacak
+     * ya da en temizi telefonun kendi geri sayım sayacını başlatmak olabilir
+     * uygulama hiçbir zaman engele takılmaz
+     *
+     * @param startRealTime
+     * @param maxTime
+     */
 
     private void showNotification(long startRealTime, int maxTime){
         int currentTime = 0;
@@ -46,6 +57,9 @@ public class ProgressService extends Service {
                 .setProgress(maxTime,currentTime,false)
                 .setPriority(Notification.PRIORITY_DEFAULT)
                 .setContentText(DateUtils.formatElapsedTime(maxTime));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {//bu satır bildirimin hemen görülmesi için eklendi
+            builder.setForegroundServiceBehavior(Notification.FOREGROUND_SERVICE_IMMEDIATE);
+        }
         startForeground(2,builder.build());
 
         handler = new Handler();
