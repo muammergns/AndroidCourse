@@ -1,10 +1,13 @@
 package com.gns.notificationforegroundservice;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import android.Manifest;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -15,6 +18,9 @@ import android.os.Build;
 import android.os.Bundle;
 
 import com.gns.notificationforegroundservice.databinding.ActivityMainBinding;
+import com.google.android.material.snackbar.Snackbar;
+
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
     //private static final String TAG = "MainActivity";
@@ -33,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
          * uygulamanın bir bildirimi ne için oluşturduğunu hangi bildirimlerin hangi kanallardan geleceğini belirtmesi gerekiyor
          * kullanıcı kendi isteğine göre bu kanalları aktif pasif yapabilir ve gereksiz bildirimlerden kurtulabilir
          * bu sözde reklamları vs engelleyecek ama uygulamalar reklamlarla önemli bildirimleri aynı kanaldan veriyor zaten
+         * CHANNEL_ID görünmüyor. bunu bildirim kanalının numarası gibi düşün. silerken bile ihtiyacın olacak
+         * channel.setDescription(description); ile bildirimlerin neden gönderildiğini açıklayabilirsin.
          */
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = getString(R.string.app_name);
@@ -77,28 +85,48 @@ public class MainActivity extends AppCompatActivity {
         NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
         Notification notification = builder.build();
 
-        /** api 34 güncellemesi
+        /*
          * yeni güncelleme ile birlikte artık bildirimleri gönderebilmek için POST_NOTIFICATIONS izni almak gerekiyor
          * manifest dosyasına <uses-permission android:name="android.permission.POST_NOTIFICATIONS" /> eklenmeli
          * android eski versiyonlar için bu izin zaten verilmiş durumda
          * api 34 ile birlikte verilmemiş durumda olacak ve bu izni istemek gerekecek
          * izni aldıktan sonra bildirimler artık daha sorumlu bir şekilde kullanılmalı
          */
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
             notificationManagerCompat.notify(0, notification);
         }else {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                shouldShowRequestPermissionRationale(android.Manifest.permission.POST_NOTIFICATIONS);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)){
+                    Snackbar.make(binding.getRoot().getRootView(),
+                            "Bildirim göstermem için izin vermen lazım. yoksa bildirimleri göremezsin.",
+                            Snackbar.LENGTH_LONG).show();
+                }else {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.POST_NOTIFICATIONS},123);
+                    }else {
+                        Snackbar.make(binding.getRoot().getRootView(),
+                                "İzinde bir sorun var. Hem versiyon düşük hem izin verilmemiş",
+                                Snackbar.LENGTH_LONG).show();
+                    }
+                }
+            }else {
+                Snackbar.make(binding.getRoot().getRootView(),
+                        "İzinde bir sorun var. Hem versiyon düşük hem izin verilmemiş",
+                        Snackbar.LENGTH_LONG).show();
             }
         }
 
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode==123){
+            if (Objects.equals(permissions[0], Manifest.permission.POST_NOTIFICATIONS)){
+                if (PackageManager.PERMISSION_GRANTED == grantResults[0]){
+                    onCreateNotification();
+                }
+            }
+        }
+    }
 }

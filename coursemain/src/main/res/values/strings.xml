@@ -7,6 +7,6 @@
     <string name="sqlitedatabase">SQLite Database</string>
     <string name="trendviewer">Trendviewer</string>
     <string name="workmanager">Work Manager</string>
-
+    <string name="alarmremindertimer">Alarm Reminder Timer</string>
 
 </resources>

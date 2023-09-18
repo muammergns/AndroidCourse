@@ -16,7 +16,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         binding.fragmentnavigation.setOnClickListener(v -> {
             try {
                 Intent intent = new Intent();
@@ -25,17 +24,15 @@ public class MainActivity extends AppCompatActivity {
             }catch (Exception e){
                 Toast.makeText(MainActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
             }
-
         });
         binding.notificationforegroundservice.setOnClickListener(v -> {
             try {
                 Intent intent = new Intent();
-                intent.setComponent(new ComponentName("com.gns.androidcourse","com.gns.notificationforegroundservice"));
+                intent.setComponent(new ComponentName("com.gns.androidcourse","com.gns.notificationforegroundservice.MainActivity"));
                 startActivity(intent);
             }catch (Exception e){
                 Toast.makeText(MainActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
             }
-
         });
         binding.recyclerviewcommands.setOnClickListener(v -> {
             try {
@@ -45,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
             }catch (Exception e){
                 Toast.makeText(MainActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
             }
-
         });
         binding.roomdatabase.setOnClickListener(v -> {
             try {
@@ -55,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
             }catch (Exception e){
                 Toast.makeText(MainActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
             }
-
         });
         binding.sqlitedatabase.setOnClickListener(v -> {
             try {
@@ -65,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
             }catch (Exception e){
                 Toast.makeText(MainActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
             }
-
         });
         binding.trendviewer.setOnClickListener(v -> {
             try {
@@ -75,7 +69,6 @@ public class MainActivity extends AppCompatActivity {
             }catch (Exception e){
                 Toast.makeText(MainActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
             }
-
         });
         binding.workmanager.setOnClickListener(v -> {
             try {
@@ -85,7 +78,15 @@ public class MainActivity extends AppCompatActivity {
             }catch (Exception e){
                 Toast.makeText(MainActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
             }
-
+        });
+        binding.alarmremindertimer.setOnClickListener(v -> {
+            try {
+                Intent intent = new Intent();
+                intent.setComponent(new ComponentName("com.gns.androidcourse","com.gns.alarmremindertimer"));
+                startActivity(intent);
+            }catch (Exception e){
+                Toast.makeText(MainActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
+            }
         });
     }
 }
