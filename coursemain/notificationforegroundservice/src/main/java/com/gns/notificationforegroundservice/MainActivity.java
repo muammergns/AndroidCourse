@@ -16,6 +16,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.gns.notificationforegroundservice.databinding.ActivityMainBinding;
 import com.google.android.material.snackbar.Snackbar;
@@ -92,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
          * api 34 ile birlikte verilmemiş durumda olacak ve bu izni istemek gerekecek
          * izni aldıktan sonra bildirimler artık daha sorumlu bir şekilde kullanılmalı
          */
+        /*
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
             notificationManagerCompat.notify(0, notification);
         }else {
@@ -114,8 +116,28 @@ public class MainActivity extends AppCompatActivity {
                         "İzinde bir sorun var. Hem versiyon düşük hem izin verilmemiş",
                         Snackbar.LENGTH_LONG).show();
             }
-        }
+        }*/
 
+        /** ilk açılışta izin isteniyor
+         * izin verilmezse yani hayıra basılmışsa
+         * uygulama tekrar açıldığında bu defa tekrar izin isteniyor ve açıklama gösteriliyor
+         * tekrar hayır denirse artık izin isteği gösterilmiyor
+         * olması gereken izin şekli bu
+         */
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
+            if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED){
+                notificationManagerCompat.notify(123, notification);
+            }else{
+                if (shouldShowRequestPermissionRationale(android.Manifest.permission.POST_NOTIFICATIONS)){
+                    Toast.makeText(MainActivity.this,
+                            "Bildirim göstermem için izin vermen lazım. yoksa bildirimleri göremezsin.",
+                            Toast.LENGTH_SHORT).show();
+                }
+                ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.POST_NOTIFICATIONS},123);
+            }
+        }else{
+            notificationManagerCompat.notify(123, notification);
+        }
     }
 
     @Override

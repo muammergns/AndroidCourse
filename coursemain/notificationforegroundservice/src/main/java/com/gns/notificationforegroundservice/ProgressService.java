@@ -5,6 +5,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Intent;
+import android.content.pm.ServiceInfo;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Handler;
@@ -60,7 +61,11 @@ public class ProgressService extends Service {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {//bu satır bildirimin hemen görülmesi için eklendi
             builder.setForegroundServiceBehavior(Notification.FOREGROUND_SERVICE_IMMEDIATE);
         }
-        startForeground(2,builder.build());
+        if (Build.VERSION.SDK_INT >= 34) {
+            startForeground(2,builder.build(), ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE);
+        }else {
+            startForeground(2,builder.build());
+        }
 
         handler = new Handler();
         runnable = () -> {

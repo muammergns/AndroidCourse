@@ -17,7 +17,9 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.provider.AlarmClock;
 import android.provider.CalendarContract;
+import android.provider.Settings;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.alarmremindertimer.databinding.ActivityMainBinding;
 import com.google.android.material.snackbar.Snackbar;
@@ -39,25 +41,15 @@ public class MainActivity extends AppCompatActivity {
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED){
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
+            if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED){
                 if (shouldShowRequestPermissionRationale(android.Manifest.permission.POST_NOTIFICATIONS)){
-                    Snackbar.make(binding.getRoot().getRootView(),
+                    Toast.makeText(MainActivity.this,
                             "Bildirim göstermem için izin vermen lazım. yoksa bildirimleri göremezsin.",
-                            Snackbar.LENGTH_LONG).show();
-                }else {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                        ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.POST_NOTIFICATIONS},123);
-                    }else {
-                        Snackbar.make(binding.getRoot().getRootView(),
-                                "İzinde bir sorun var. Hem versiyon düşük hem izin verilmemiş",
-                                Snackbar.LENGTH_LONG).show();
-                    }
+                            Toast.LENGTH_SHORT).show();
                 }
-            }else {
-                Snackbar.make(binding.getRoot().getRootView(),
-                        "İzinde bir sorun var. Hem versiyon düşük hem izin verilmemiş",
-                        Snackbar.LENGTH_LONG).show();
+                ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.POST_NOTIFICATIONS},123);
             }
         }
         binding.setAlarmOneMinuteButton.setOnClickListener(v -> {
@@ -149,14 +141,27 @@ public class MainActivity extends AppCompatActivity {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S){
                     if (manager.canScheduleExactAlarms()){
                         manager.setExactAndAllowWhileIdle( type,  millis, pintent );
+                        Toast.makeText(MainActivity.this,
+                                "setExactAndAllowWhileIdle > S",
+                                Toast.LENGTH_SHORT).show();
                     }else {
+                        startActivity(new Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM));
                         manager.set( type,  millis, pintent );
+                        Toast.makeText(MainActivity.this,
+                                "set",
+                                Toast.LENGTH_SHORT).show();
                     }
                 }else {
                     manager.setExactAndAllowWhileIdle( type,  millis, pintent );
+                    Toast.makeText(MainActivity.this,
+                            "setExactAndAllowWhileIdle < S",
+                            Toast.LENGTH_SHORT).show();
                 }
             }else {
                 manager.setExact( type,  millis, pintent );
+                Toast.makeText(MainActivity.this,
+                        "setExact",
+                        Toast.LENGTH_SHORT).show();
             }
             /** Alarm kurmanın en iyi yolu
              * bu bölümde kısa süreli alarm kurmanın en az pil tüketen her android sürümüyle uyumlu çalışan bir versiyonu tasarlandı
@@ -189,14 +194,27 @@ public class MainActivity extends AppCompatActivity {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S){
                     if (manager.canScheduleExactAlarms()){
                         manager.setExactAndAllowWhileIdle( type,  millis, pintent );
+                        Toast.makeText(MainActivity.this,
+                                "setExactAndAllowWhileIdle > S",
+                                Toast.LENGTH_SHORT).show();
                     }else {
+                        startActivity(new Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM));
                         manager.set( type,  millis, pintent );
+                        Toast.makeText(MainActivity.this,
+                                "set",
+                                Toast.LENGTH_SHORT).show();
                     }
                 }else {
                     manager.setExactAndAllowWhileIdle( type,  millis, pintent );
+                    Toast.makeText(MainActivity.this,
+                            "setExactAndAllowWhileIdle < S",
+                            Toast.LENGTH_SHORT).show();
                 }
             }else {
                 manager.setExact( type,  millis, pintent );
+                Toast.makeText(MainActivity.this,
+                        "setExact",
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }
