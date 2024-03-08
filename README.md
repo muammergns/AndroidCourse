@@ -24,6 +24,10 @@ Android uygulama geliştirirken en çok kullanılan sistemlerin nasıl kurulduğ
 - Custom Bottom Slider Menu oluşturma
 - FloatingView, AppOverlay kullanımı
 - Custom AlertDialog oluşturma
+- OpenCV ObjectDetection kullanımı
+- AutoClicker projesi
+- Bluetooth Modbus kullanımı
+- Wifi ModbusTCP kullanımı
 
   
 ## Teşekkür
