@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_graph"
+    app:startDestination="@id/firstChildFragment">
+    <fragment
+        android:id="@+id/firstChildFragment"
+        android:name="com.gns.androidcourse.fragmentnavigation.FirstChildFragment"
+        android:label="fragment_first_child"
+        tools:layout="@layout/fragment_first_child" >
+        <action
+            android:id="@+id/action_firstChildFragment_to_secondChildFragment"
+            app:destination="@id/secondChildFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/secondChildFragment"
+        android:name="com.gns.androidcourse.fragmentnavigation.SecondChildFragment"
+        android:label="fragment_second_child"
+        tools:layout="@layout/fragment_second_child" >
+        <action
+            android:id="@+id/action_secondChildFragment_to_firstChildFragment"
+            app:destination="@id/firstChildFragment" />
+        <argument
+            android:name="age"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
+</navigation>

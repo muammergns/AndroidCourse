@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">AndroidCourse</string>
+    <string name="fragmentnavigation">Fragment Navigation</string>
+    <string name="notificationforegroundservice">Notification Foreground Service</string>
+    <string name="recyclerviewcommands">Recyclerview Commands</string>
+    <string name="roomdatabase">Room Database</string>
+    <string name="sqlitedatabase">SQLite Database</string>
+    <string name="alarmremindertimer">Alarm Reminder Timer</string>
+    <string name="animator_and_animations">Animator and Animations</string>
+</resources>
