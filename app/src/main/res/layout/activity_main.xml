@@ -56,7 +56,11 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/sqlitedatabase"
                 android:text="@string/sqlitedatabase"/>
-            
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/workmanager"
+                android:text="@string/work_manager"/>
 
 
         </LinearLayout>

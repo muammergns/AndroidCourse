@@ -20,6 +20,9 @@
         android:theme="@style/Theme.AndroidCourse"
         tools:targetApi="31">
         <activity
+            android:name=".workmanager.WorkManagerActivity"
+            android:exported="false" />
+        <activity
             android:name=".sqlitedatabase.SqliteDatabaseActivity"
             android:exported="false" />
         <activity

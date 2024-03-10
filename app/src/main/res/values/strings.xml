@@ -7,4 +7,5 @@
     <string name="sqlitedatabase">SQLite Database</string>
     <string name="alarmremindertimer">Alarm Reminder Timer</string>
     <string name="animator_and_animations">Animator and Animations</string>
+    <string name="work_manager">Work Manager</string>
 </resources>

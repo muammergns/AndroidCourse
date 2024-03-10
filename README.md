@@ -13,16 +13,16 @@ Android uygulama geliştirirken en çok kullanılan sistemlerin nasıl kurulduğ
 - RecyclerView kullanımı
 - Room Database kullanımı
 - SQLite Database kullanımı 
+- WorkManager kullanımı
 
   
 ## Yol haritası
 
-- WorkManager kullanımı
 - SurfaceView, Paint, Canvas kullanımı
 - Custom Numpad oluşturma
 - Screen Configuration, Dimensions detaylandırılması
 - Custom Bottom Slider Menu oluşturma
-- FloatingView, AppOverlay kullanımı
+- FloatingView, Application Overlay kullanımı
 - Custom AlertDialog oluşturma
 - OpenCV ObjectDetection kullanımı
 - AutoClicker projesi

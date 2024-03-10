@@ -14,6 +14,7 @@ import com.gns.androidcourse.notificationforegroundservice.NotificationForegroun
 import com.gns.androidcourse.recyclerviewcommands.RecyclerViewCommandsActivity;
 import com.gns.androidcourse.roomdatabase.RoomDatabaseActivity;
 import com.gns.androidcourse.sqlitedatabase.SqliteDatabaseActivity;
+import com.gns.androidcourse.workmanager.WorkManagerActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -86,5 +87,15 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
             }
         });
+
+        binding.workmanager.setOnClickListener(v -> {
+            try {
+                Intent intent = new Intent(MainActivity.this, WorkManagerActivity.class);
+                startActivity(intent);
+            }catch (Exception e){
+                Toast.makeText(MainActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 }
